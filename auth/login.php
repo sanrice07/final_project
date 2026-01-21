@@ -15,8 +15,8 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
             $_SESSION["username"]=$user["username"];
             header("Location: ../index.php");
             exit;
-        } else $error="Password salah";
-    } else $error="Email tidak ditemukan";
+        } else $error="Password Salah";
+    } else $error="Email Tidak Ditemukan";
 }
 ?>
 <!DOCTYPE html>
