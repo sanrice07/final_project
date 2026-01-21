@@ -1,42 +1,108 @@
 <?php
+session_start();
 include "../koneksi.php";
-$msg = "";
 
-if($_SERVER["REQUEST_METHOD"]=="POST"){
-    $username = $_POST["username"];
-    $email = $_POST["email"];
-    $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
+if (isset($_POST['register'])) {
+    $nama = htmlspecialchars($_POST['nama']);
+    $email = htmlspecialchars($_POST['email']);
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    $sql = "INSERT INTO users VALUES(NULL,'$username','$email','$password',NOW())";
-    if(mysqli_query($conn,$sql)){
-        $msg = "Registrasi berhasil! <a href='login.php'>Login</a>";
+    $cek = mysqli_query($conn, "SELECT * FROM users WHERE email='$email'");
+    if (mysqli_num_rows($cek) > 0) {
+        $error = "Email sudah terdaftar!";
     } else {
-        $msg = "Gagal register!";
+        mysqli_query($conn, "INSERT INTO users (nama, email, password) VALUES ('$nama', '$email', '$password')");
+        header("Location: login.php");
+        exit;
     }
 }
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-<title>Register</title>
-<style>
-body{background:#E6F2FF;font-family:Arial;}
-.box{width:350px;margin:auto;margin-top:60px;background:white;padding:20px;border-radius:10px;}
-input,button{width:100%;padding:10px;margin:8px;}
-button{background:#007BFF;color:white;border:none;}
-</style>
+    <meta charset="UTF-8">
+    <title>Registrasi</title>
+    <link rel="stylesheet" href="../assets/style.css">
+
+    <style>
+        .register-box {
+            max-width: 420px;
+            margin: 100px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .register-box h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #007bff;
+        }
+
+        .register-box input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .register-box button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .register-box button:hover {
+            background-color: #0056b3;
+        }
+
+        .register-box .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .register-box p {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .register-box a {
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
-<div class="box">
-<h2>Register</h2>
-<form method="POST">
-<input name="username" placeholder="Username" required>
-<input name="email" type="email" placeholder="Email" required>
-<input name="password" type="password" placeholder="Password" required>
-<button>Daftar</button>
-</form>
-<?= $msg ?>
+
+<div class="register-box">
+    <h2>Registrasi</h2>
+
+    <?php if (isset($error)) : ?>
+        <div class="error"><?= $error ?></div>
+    <?php endif; ?>
+
+    <form method="post">
+        <input type="text" name="nama" placeholder="Nama Lengkap" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+
+        <button type="submit" name="register">Daftar</button>
+    </form>
+
+    <p>Sudah punya akun? <a href="login.php">Login</a></p>
 </div>
+
 </body>
 </html>

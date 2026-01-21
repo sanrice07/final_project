@@ -1,6 +1,7 @@
 <?php
 include "../koneksi.php";
 $id = $_GET['id'];
+
 $data = mysqli_query($conn, "SELECT * FROM data_user WHERE id=$id");
 $d = mysqli_fetch_assoc($data);
 
@@ -13,9 +14,30 @@ if (isset($_POST['update'])) {
 }
 ?>
 
-<h2>Edit Data</h2>
-<form method="post">
-  Nama: <input type="text" name="nama" value="<?= $d['nama'] ?>"><br><br>
-  Email: <input type="email" name="email" value="<?= $d['email'] ?>"><br><br>
-  <button type="submit" name="update">Update</button>
-</form>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Data</title>
+    <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h2>Edit Data</h2>
+
+    <form method="post">
+        <label>Nama</label>
+        <input type="text" name="nama" value="<?= $d['nama'] ?>">
+
+        <label>Email</label>
+        <input type="email" name="email" value="<?= $d['email'] ?>">
+
+        <button type="submit" name="update">Update</button>
+    </form>
+
+    <br>
+    <a href="tampil.php" class="btn">⬅ Kembali</a>
+</div>
+
+</body>
+</html>

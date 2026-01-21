@@ -10,9 +10,30 @@ if (isset($_POST['simpan'])) {
 }
 ?>
 
-<h2>Tambah Data</h2>
-<form method="post">
-  Nama: <input type="text" name="nama" required><br><br>
-  Email: <input type="email" name="email" required><br><br>
-  <button type="submit" name="simpan">Simpan</button>
-</form>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tambah Data</title>
+    <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h2>Tambah Data</h2>
+
+    <form method="post">
+        <label>Nama</label>
+        <input type="text" name="nama" required>
+
+        <label>Email</label>
+        <input type="email" name="email" required>
+
+        <button type="submit" name="simpan">Simpan</button>
+    </form>
+
+    <br>
+    <a href="tampil.php" class="btn">⬅ Kembali</a>
+</div>
+
+</body>
+</html>
