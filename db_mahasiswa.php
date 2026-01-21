@@ -1,12 +1,13 @@
 <?php
-$host = "localhost";
-$user = "root";
-$pass = "";
-$db   = "db_mahasiswabaru";
+// db_mahasiswa.php
+$host = 'localhost';
+$user = 'root';
+$pass = '';
+$db   = 'db_mahasiswa';
 
-$koneksi = mysqli_connect($host, $user, $pass, $db);
+$con = mysqli_connect($host, $user, $pass, $db);
 
-if (!$koneksi) {
-    die("Koneksi database gagal: " . mysqli_connect_error());
+if (!$con) {
+    die('Koneksi database gagal: ' . mysqli_connect_error());
 }
 ?>
