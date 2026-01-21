@@ -21,7 +21,16 @@ $result = mysqli_query($con, $sql);
     table{width:100%;border-collapse:collapse;margin-top:12px}
     th,td{padding:8px;border:1px solid #ddd;text-align:left}
     th{background:#f4f4f4}
+    .btn{padding:6px 8px;border-radius:6px;text-decoration:none;border:none;cursor:pointer}
+    .btn-edit{background:#4caf50;color:#fff}
+    .btn-delete{background:#e74c3c;color:#fff}
+    form.inline{display:inline}
   </style>
+  <script>
+    function confirmDelete() {
+      return confirm('Yakin ingin menghapus data ini?');
+    }
+  </script>
 </head>
 <body>
   <div class="container">
@@ -36,18 +45,28 @@ $result = mysqli_query($con, $sql);
             echo '<div style="padding:10px;background:#fff7e6;border:1px solid #f0d8b7">Belum ada data.</div>';
         } else {
             echo '<table>';
-            echo '<thead><tr><th>No</th><th>NPM</th><th>Nama</th><th>Email</th></tr></thead><tbody>';
+            echo '<thead><tr><th>No</th><th>NPM</th><th>Nama</th><th>Email</th><th>Aksi</th></tr></thead><tbody>';
             $no = 1;
             while ($row = mysqli_fetch_assoc($result)) {
                 $id_label = htmlspecialchars($row['id_mhs'] ?? $no);
                 $npm = htmlspecialchars($row['npm'] ?? '');
                 $nama = htmlspecialchars($row['nama'] ?? '');
                 $email = htmlspecialchars($row['email'] ?? '');
+
+                $edit_link = "user.php?edit=" . urlencode($row['id_mhs']);
+
                 echo "<tr>
                         <td>{$id_label}</td>
                         <td>{$npm}</td>
                         <td>{$nama}</td>
                         <td>{$email}</td>
+                        <td>
+                          <a class='btn btn-edit' href='{$edit_link}'>Edit</a>
+                          <form class='inline' method='post' action='delete.php' onsubmit='return confirmDelete();'>
+                            <input type='hidden' name='id' value='" . htmlspecialchars($row['id_mhs']) . "'>
+                            <button type='submit' class='btn btn-delete'>Delete</button>
+                          </form>
+                        </td>
                       </tr>";
                 $no++;
             }
