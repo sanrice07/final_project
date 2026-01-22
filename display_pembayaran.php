@@ -1,5 +1,4 @@
 <?php
-// display_pembayaran.php - versi aman & dinamis
 require_once __DIR__ . '/db_mahasiswa.php';
 
 if (!isset($con) || !($con instanceof mysqli)) {
@@ -10,7 +9,6 @@ $err = '';
 $cols = [];
 $rows = [];
 
-// Ambil struktur kolom (SHOW COLUMNS)
 $qc = mysqli_query($con, "SHOW COLUMNS FROM `pembayaran`");
 if (!$qc) {
     $err = 'Gagal mengambil struktur tabel pembayaran: ' . mysqli_error($con);
@@ -19,7 +17,6 @@ if (!$qc) {
         $cols[] = $r['Field'];
     }
 
-    // Ambil semua data dari tabel pembayaran (SELECT *)
     $q = mysqli_query($con, "SELECT * FROM `pembayaran` ORDER BY 1 DESC");
     if (!$q) {
         $err = 'Gagal mengambil data tabel pembayaran: ' . mysqli_error($con);
@@ -76,6 +73,67 @@ if (!$qc) {
             background: #f1f7ff
         }
     </style>
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f2f8ff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1100px;
+            margin: 40px auto;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #1e88e5;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 14px;
+            background: #64b5f6;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #42a5f5;
+        }
+
+        .btn.secondary {
+            background: #90caf9;
+            color: #0d47a1;
+        }
+
+        .btn.secondary:hover {
+            background: #64b5f6;
+            color: #fff;
+        }
+
+        .table th {
+            background: #e3f2fd;
+            color: #1e88e5;
+            border-bottom: 2px solid #bbdefb;
+        }
+
+        .table tr:hover td {
+            background: #f5faff;
+        }
+    </style>
 </head>
 
 <body>
@@ -110,7 +168,6 @@ if (!$qc) {
 
             <div style="margin-top:12px;">
                 <a class="btn" href="add_pembayaran.php">Tambah Pembayaran</a>
-                <a class="btn secondary" href="dashboard.php" style="margin-left:8px">Kembali ke Dashboard</a>
             </div>
 
         <?php endif; ?>
