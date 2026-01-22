@@ -1,6 +1,18 @@
 <?php
-include "../koneksi.php";
-$id = $_GET['id'];
+include 'koneksi.php';
 
-mysqli_query($conn, "DELETE FROM data_user WHERE id=$id");
-header("Location: tampil.php");
+if(isset($_GET['id'])){
+    $id = $_GET['id'];
+
+    $query = "DELETE FROM users WHERE id='$id'";
+    $result = mysqli_query($conn, $query);
+
+    if($result){
+        header("Location: ../index.php");
+        exit;
+    } else {
+        echo "Gagal menghapus data!";
+    }
+}else{
+    echo "ID tidak ditemukan!";
+}
